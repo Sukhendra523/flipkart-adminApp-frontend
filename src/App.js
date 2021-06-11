@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./components/container/Home";
+import Signin from "./components/container/Signin";
+import Signup from "./components/container/Signup";
+import PrivateRoute from "./components/HOC/PrivateRoute";
+import { useDispatch, useSelector } from "react-redux";
+import { isUserLoggedIn } from "./actions";
+import { useEffect } from "react";
+import Products from "./components/container/Products";
+import Orders from "./components/container/Orders";
+import Categories from "./components/container/Categories";
 
 function App() {
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!auth.authenticated) {
+      dispatch(isUserLoggedIn());
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/category" component={Categories} />
+
+        <Route path="/products" component={Products} />
+        <Route path="/orders" component={Orders} />
+
+        <Route path="/signin" component={Signin} />
+        <Route path="/signup" component={Signup} />
+      </Switch>
+    </Router>
   );
 }
 
