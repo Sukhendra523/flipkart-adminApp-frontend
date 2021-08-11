@@ -30,7 +30,7 @@ const Signup = () => {
 
   return (
     <Layout>
-      <Container>
+      <Container className="pt-5">
         <Row className="mt-5">
           <Col md={6}>
             <Input
