@@ -1,19 +1,17 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-const ModalUi = (props) => {
+const ModalUi = ({show,onHide,title,buttons,children}) => {
   return (
-    <Modal show={props.show} onHide={props.onHide}>
+    <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{props.title}</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.children}</Modal.Body>
+      <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.onHide}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={props.onSubmit}>
-          Add
-        </Button>
+        {buttons && buttons.map(({label,classNames,onClick},i)=><Button key={i} variant={classNames} onClick={onClick}>
+          {label}
+        </Button>) 
+      }
       </Modal.Footer>
     </Modal>
   );
