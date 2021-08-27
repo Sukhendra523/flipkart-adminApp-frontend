@@ -33,7 +33,7 @@ const UpdateCategoryModal = ({show,onHide,title,buttons,expandedArray,handleUpda
               />
             </Col>
             <Col>
-              <select
+              {/* <select
                 className="form-control"
                 value={parentId}
                 onChange={(e) =>
@@ -51,10 +51,24 @@ const UpdateCategoryModal = ({show,onHide,title,buttons,expandedArray,handleUpda
                     {option.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
+
+              <Input
+              type="select"
+              value={parentId}
+              onChange={(e) =>
+                handleUpdateCategoryInput(
+                  "parentId",
+                  e.target.value,
+                  i,
+                  "expanded"
+                )}
+              options={categoryList}
+              placeholder={"Select Parent Id"}
+            />
             </Col>
             <Col>
-              <select
+              {/* <select
                 className="form-control"
                 value={type}
                 onChange={(e) =>
@@ -70,7 +84,20 @@ const UpdateCategoryModal = ({show,onHide,title,buttons,expandedArray,handleUpda
                 <option value="store">Store</option>
                 <option value="shop">shop</option>
                 <option value="page">page</option>
-              </select>
+              </select> */}
+              <Input
+              type="select"
+              value={type}
+              onChange={(e) =>
+                handleUpdateCategoryInput(
+                  "type",
+                  e.target.value,
+                  i,
+                  "expanded"
+                )}
+              options={[{name:"Store",value:"store"},{name:"Shop",value:"shop"},{name:"Page",value:"page"}]}
+              placeholder={"Select Category Type"}
+            />
             </Col>
           </Row>
         ))}
@@ -93,9 +120,10 @@ const UpdateCategoryModal = ({show,onHide,title,buttons,expandedArray,handleUpda
                   )
                 }
               />
+
             </Col>
             <Col>
-              <select
+              {/* <select
                 className="form-control"
                 value={parentId}
                 onChange={(e) =>
@@ -113,10 +141,23 @@ const UpdateCategoryModal = ({show,onHide,title,buttons,expandedArray,handleUpda
                     {option.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <Input
+              type="select"
+              value={parentId}
+              onChange={(e) =>
+                handleUpdateCategoryInput(
+                  "parentId",
+                  e.target.value,
+                  i,
+                  "checked"
+                )}
+              options={categoryList}
+              placeholder={"Select Parent Id"}
+            />
             </Col>
             <Col>
-              <select
+              {/* <select
                 className="form-control"
                 value={type}
                 onChange={(e) =>
@@ -132,7 +173,21 @@ const UpdateCategoryModal = ({show,onHide,title,buttons,expandedArray,handleUpda
                 <option value="store">Store</option>
                 <option value="shop">shop</option>
                 <option value="page">page</option>
-              </select>
+              </select> */}
+
+              <Input
+              type="select"
+              value={type}
+              onChange={(e) =>
+                handleUpdateCategoryInput(
+                  "type",
+                  e.target.value,
+                  i,
+                  "checked"
+                )}
+              options={[{name:"Store",value:"store"},{name:"Shop",value:"shop"},{name:"Page",value:"page"}]}
+              placeholder={"Select Category Type"}
+            />
             </Col>
           </Row>
         ))}

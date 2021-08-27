@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import Products from "./components/container/Products";
 import Orders from "./components/container/Orders";
 import Categories from "./components/container/Categories";
+import CategoryPage from "./components/container/CategoryPage";
 
 function App() {
   const auth = useSelector((state) => state.auth);
@@ -19,13 +20,18 @@ function App() {
     if (!auth.authenticated) {
       dispatch(isUserLoggedIn());
     }
-    dispatch(getInitialData());
-  }, []);
+    if(auth.authenticated){
+      dispatch(getInitialData());
+    }
+    
+  }, [auth.authenticated]);
 
   return (
     <Router>
       <Switch>
         <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/pages"  component={CategoryPage} />
+
         <PrivateRoute path="/category" component={Categories} />
 
         <PrivateRoute path="/products" component={Products} />

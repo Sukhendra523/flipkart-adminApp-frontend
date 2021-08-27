@@ -10,8 +10,7 @@ import {
   updateCategories,
 } from "../../../actions";
 import Layout from "../../Layout";
-import Input from "../../UI/Input";
-import Modal from "../../UI/Modal";
+import './Style.css'
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import {
   IoIosCheckboxOutline,
@@ -25,6 +24,7 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import UpdateCategoryModal from "./UpdateCategoryModal";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 import AddCategoryModal from "./AddCategoryModal";
+import { createLinearCategoriesList } from "../../../helper/categoryHelper";
 
 const Categories = () => {
   const [show, setShow] = useState(false);
@@ -65,22 +65,9 @@ const Categories = () => {
     return myCategories;
   };
 
-  const createCategoryList = (categories, options = []) => {
-    for (let category of categories) {
-      options.push({
-        value: category._id,
-        name: category.name,
-        parentId: category.parentId,
-        type: category.type,
-      });
 
-      if (category.children.length > 0) {
-        createCategoryList(category.children, options);
-      }
-    }
-    return options;
-  };
-  const categoryList = createCategoryList(category.categories)
+
+  const categoryList = createLinearCategoriesList(category.categories)
 
 
   const editHandler = () => {
@@ -109,6 +96,12 @@ const Categories = () => {
 
   const handleAddCategory = () => {
     const form = new FormData();
+
+    if (categoryName === "") {
+      alert("Category name is required");
+      setShow(false);
+      return;
+    }
 
     form.append("name", categoryName);
     form.append("parentId", parentCategoryId);
@@ -139,12 +132,8 @@ const Categories = () => {
       form.append("type", type);
     });
 
-    dispatch(updateCategories(form)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-        setShowUpdateCategoryModal(false);
-      }
-    });
+    dispatch(updateCategories(form))
+    setShowUpdateCategoryModal(false)
   };
 
   const deleteHanlder=()=>{
@@ -155,12 +144,9 @@ const Categories = () => {
   const handleDeleteCategoies=()=>{
     
     console.log(checked)
-    dispatch(deleteCategories(checked)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-        setShowDeleteModal(false);
-      }
-    });
+    dispatch(deleteCategories(checked))
+    setShowDeleteModal(false);
+
 
   }
 
@@ -210,9 +196,18 @@ const Categories = () => {
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <h1>Categories</h1>
-            <Button variant="primary" onClick={handleShow}>
-              Add Category
-            </Button>
+            <div className="actionBtnContainer">
+                <span>Actions: </span>
+                <button onClick={handleShow}>
+                  <IoIosAdd /> <span>Add</span>
+                </button>
+                <button onClick={deleteHanlder}>
+                  <IoIosTrash /> <span>Delete</span>
+                </button>
+                <button onClick={editHandler}>
+                  <IoIosCloudUpload /> <span>Edit</span>
+                </button>
+              </div>
           </Col>
         </Row>
         <Row>
@@ -234,16 +229,7 @@ const Categories = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12}>
-            <button onClick={deleteHanlder}>
-              <IoIosTrash /> <span>Delete</span>
-            </button>
-            <button onClick={editHandler}>
-              <IoIosCloudUpload /> <span>Edit</span>
-            </button>
-          </Col>
-        </Row>
+        
       </Container>
 
       {/* Add CategoryModal Starts */}
