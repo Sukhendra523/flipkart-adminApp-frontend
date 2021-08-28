@@ -9,7 +9,7 @@ const Input = (props) => {
     placeholder,
     value,
     onChange,
-    errorMessage,
+    errorMessage="",
     options,
   } = props;
 
